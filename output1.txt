@@ -1,0 +1,40 @@
+x_train (50000, 32, 32, 3)
+y_train (50000, 1)
+x_test (10000, 32, 32, 3)
+y_test (10000, 1)
+w1: (3072, 10)
+b1: (10,)
+x_train (50000, 3072)
+y_train (50000, 10)
+x_test (10000, 3072)
+y_test (10000, 10)
+iterations 0 / 300 : loss 1.000000
+iterations 10 / 300 : loss 0.876636
+iterations 20 / 300 : loss 0.842540
+iterations 30 / 300 : loss 0.823616
+iterations 40 / 300 : loss 0.812389
+iterations 50 / 300 : loss 0.805426
+iterations 60 / 300 : loss 0.800905
+iterations 70 / 300 : loss 0.797821
+iterations 80 / 300 : loss 0.795605
+iterations 90 / 300 : loss 0.793930
+iterations 100 / 300 : loss 0.792604
+iterations 110 / 300 : loss 0.791514
+iterations 120 / 300 : loss 0.790589
+iterations 130 / 300 : loss 0.789785
+iterations 140 / 300 : loss 0.789072
+iterations 150 / 300 : loss 0.788432
+iterations 160 / 300 : loss 0.787850
+iterations 170 / 300 : loss 0.787318
+iterations 180 / 300 : loss 0.786828
+iterations 190 / 300 : loss 0.786374
+iterations 200 / 300 : loss 0.785951
+iterations 210 / 300 : loss 0.785557
+iterations 220 / 300 : loss 0.785187
+iterations 230 / 300 : loss 0.784839
+iterations 240 / 300 : loss 0.784512
+iterations 250 / 300 : loss 0.784202
+iterations 260 / 300 : loss 0.783910
+iterations 270 / 300 : loss 0.783632
+iterations 280 / 300 : loss 0.783368
+iterations 290 / 300 : loss 0.783117
