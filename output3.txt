@@ -998,3 +998,11 @@ iterations 60 / 100:loss 0.537529
 iterations 70 / 100:loss 0.533771
 iterations 80 / 100:loss 0.553007
 iterations 90 / 100:loss 0.534576
+
+test loss -> 0.7620024329118823
+
+
+x_train-> (50000, 3072)
+train_acc = 0.8424911111111111
+x_test-> (10000, 3072)
+test_acc =  0.7736111111111111
