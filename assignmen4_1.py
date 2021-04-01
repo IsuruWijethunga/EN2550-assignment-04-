@@ -51,10 +51,14 @@ lr =1.4e-2
 lr_decay=0.999
 reg =5e-6
 loss_history = []
+test_loss_history = []
 train_acc_history = []
 val_acc_history = []
 seed = 0
 rng = np.random.default_rng(seed=seed)
+
+#Gradient decending and Calculating train loss throughout the loop
+
 for t in range(iterations):
   indices = np.arange(Ntr)
   rng.shuffle(indices)
@@ -65,7 +69,6 @@ for t in range(iterations):
   loss_history.append(loss)
   if t%10==0:
     print('iterations %d / %d : loss %f'%(t,iterations,loss))
-
   dy_pred = 1./batch_size*2.0*(y_pred-y)
   dw = x.T.dot(dy_pred) + reg * w1
   db = dy_pred.sum(axis=0)
@@ -73,31 +76,40 @@ for t in range(iterations):
   b1 -=lr*db
   lr *=lr_decay
 
+#Calculating test loss
+test_loss = 0
+
+indices = np.arange(Nte)
+rng.shuffle(indices)
+x=x_test[indices]
+y=y_test[indices]
+y_pred = x.dot(w1) +b1
+test_loss = 1.0/10000*np.square(y_pred-y).sum()+reg*(np.sum(w1*w1))
+print("test loss ->",test_loss)
 fig,ax =plt.subplots(1,10)
 fig.set_size_inches(32,10)
 print(np.min(w1))
 print(np.max(w1))
 
+#Plotting w images
 for i in range(10):
   img = w1[:,i].reshape(32,32,3)
   nor_img =255*(img-np.min(w1))/(np.max(w1)-np.min(w1))
   ax[i].imshow(nor_img.astype('uint8'))
 plt.show()
 
-plt.plot(loss_history)
-plt.xlabel("iterations")
-plt.ylabel("Loss")
-plt.title("Loss history")
-plt.show()
-
+#Calculating Train accuracy
 x_t = x_train
 print("x_train->",x_t.shape)
 y_pred = x_t.dot(w1)+b1
 train_acc = 1.0 - 1/(Ntr*9.)*(np.abs(np.argmax(y_train,axis=1)-np.argmax(y_pred,axis=1))).sum()
 print("train_acc =",train_acc)
 
+#Calculating Test accuracy
 x_t = x_test
 print("x_test->",x_t.shape)
 y_pred = x_t.dot(w1)+b1
 test_acc = 1.0 - 1/(Nte*9.)*(np.abs(np.argmax(y_test,axis=1)-np.argmax(y_pred,axis=1))).sum()
 print("test_acc =",test_acc)
+
+print(test_loss_history)
