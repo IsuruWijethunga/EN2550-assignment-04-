@@ -46,7 +46,7 @@ print('y_train',y_train.shape)
 print('x_test',x_test.shape)
 print('y_test',y_test.shape)
 
-iterations = 1000
+iterations = 300
 lr =1.4e-2
 lr_decay=0.999
 reg =5e-6
@@ -61,9 +61,43 @@ for t in range(iterations):
   x=x_train[indices]
   y=y_train[indices]
   y_pred = x.dot(w1) +b1
-  loss = 1.0/batch_size*np.square(y_pred-y).sum()+reg*(np.sum(w2*w2))
+  loss = 1.0/batch_size*np.square(y_pred-y).sum()+reg*(np.sum(w1*w1))
   loss_history.append(loss)
   if t%10==0:
     print('iterations %d / %d : loss %f'%(t,iterations,loss))
 
   dy_pred = 1./batch_size*2.0*(y_pred-y)
+  dw = x.T.dot(dy_pred) + reg * w1
+  db = dy_pred.sum(axis=0)
+  w1 -=lr *dw
+  b1 -=lr*db
+  lr *=lr_decay
+
+fig,ax =plt.subplots(1,10)
+fig.set_size_inches(32,10)
+print(np.min(w1))
+print(np.max(w1))
+
+for i in range(10):
+  img = w1[:,i].reshape(32,32,3)
+  nor_img =255*(img-np.min(w1))/(np.max(w1)-np.min(w1))
+  ax[i].imshow(nor_img.astype('uint8'))
+plt.show()
+
+plt.plot(loss_history)
+plt.xlabel("iterations")
+plt.ylabel("Loss")
+plt.title("Loss history")
+plt.show()
+
+x_t = x_train
+print("x_train->",x_t.shape)
+y_pred = x_t.dot(w1)+b1
+train_acc = 1.0 - 1/(Ntr*9.)*(np.abs(np.argmax(y_train,axis=1)-np.argmax(y_pred,axis=1))).sum()
+print("train_acc =",train_acc)
+
+x_t = x_test
+print("x_test->",x_t.shape)
+y_pred = x_t.dot(w1)+b1
+test_acc = 1.0 - 1/(Nte*9.)*(np.abs(np.argmax(y_test,axis=1)-np.argmax(y_pred,axis=1))).sum()
+print("test_acc =",test_acc)
