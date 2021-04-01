@@ -80,23 +80,34 @@ for t in range(iterations):
   b2 -= lr*db2
   lr *= lr_decay
 
+#Calculating test loss
+test_loss = 0
+batch_indices = np.arange(Nte)
+x=x_test[batch_indices]
+y=y_test[batch_indices]
+h=1.0/(1.0+np.exp(-(x.dot(w1)+b1)))
+y_pred =h.dot(w2)+b2
+test_loss= 1./10000*np.square(y_pred-y).sum()+reg*(np.sum(w2*w2)+np.sum(w1*w1)) #batch_size= 10000
+print("test loss ->",test_loss)
+
+
+#Plotting W images
 fig,ax =plt.subplots(1,10)
 fig.set_size_inches(32,10)
-print(np.min(w1))
-print(np.max(w1))
-
 for i in range(10):
   img = w1[:,i].reshape(32,32,3)
   nor_img =255*(img-np.min(w1))/(np.max(w1)-np.min(w1))
   ax[i].imshow(nor_img.astype('uint8'))
 plt.show()
 
+#plotting train loss
 plt.plot(loss_history)
 plt.xlabel("iterations")
 plt.ylabel("Loss")
 plt.title("Loss history")
 plt.show()
 
+# Calculating train accuracy
 x_t = x_train
 print("x_train->",x_t.shape)
 h=1.0/(1.0+np.exp(-(x_t.dot(w1)+b1)))
@@ -105,6 +116,7 @@ y_pred = h.dot(w2)+b2
 train_acc = 1.0 - 1/(Ntr*9)*(np.abs(np.argmax(y_train,axis=1)-np.argmax(y_pred,axis=1))).sum()
 print("train_acc =",train_acc)
 
+#calculating test accuracy
 x_t=x_test
 print("x_test->",x_t.shape)
 h=1.0/(1.0+np.exp(-(x_t.dot(w1)+b1)))
