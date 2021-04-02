@@ -41,7 +41,7 @@ model.add(layers.Dense(10))
 
 sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9)
 model.compile(optimizer='sgd',loss = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),metrics = ['accuracy'])
-print(model.summary())
+print(model.summary()) 
 
 log_dir = ".\\logs\\fit\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir = log_dir, histogram_freq = 1)
